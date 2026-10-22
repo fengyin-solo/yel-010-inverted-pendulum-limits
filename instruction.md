@@ -59,7 +59,12 @@ rate' = gravity_m_s2/length_m*sin(theta) - damping_s_inv*rate + u/(mass_kg*lengt
 
 每轮使用经典四阶 Runge–Kutta，固定步长 `dt_s`。最后一步如果不足 `dt_s`，按剩余时长积分，不能跳过尾段。给定初始角和初始角速度时，积分整段并给出终态和最大绝对控制力矩。
 
-恢复包络用同一模型求：从 `recovery_low_rad` 到 `recovery_high_rad` 二分 `48` 轮，初始角速度取 0。若终态同时满足 `|theta| <= settle_angle_rad` 且 `|rate| <= settle_rate_rad_s`，该角可恢复。最终返回满足条件的最大角，精度受二分步数控制。若低端本身都不能恢复，按包络不存在处理。
+恢复判定不假设“角度越大越难收住”，恢复区间可能断开，也可能出现多个岛状区间。
+用同一模型把 `recovery_low_rad` 到 `recovery_high_rad` 等分成 `256` 段，共检查
+`257` 个含两端点的候选角，初始角速度均取 0。若某个候选的终态同时满足
+`|theta| <= settle_angle_rad` 且 `|rate| <= settle_rate_rad_s`，该候选可恢复。
+最终返回全部可恢复候选中的最大角；若没有任何候选可恢复，按包络不存在处理。
+`search_tolerance_rad` 仍是台架声明的搜索精度字段，但这次必须遍历整个区间，不能据此把检查退化为单调二分。
 
 ## 评估结果
 

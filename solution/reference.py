@@ -162,23 +162,24 @@ def evaluate(payload):
     )
     low = simulation["recovery_low_rad"]
     high = simulation["recovery_high_rad"]
-    low_state, _ = simulate(payload, low, 0.0)
-    if not recovered(low_state, simulation):
+    candidates = [
+        low + (high - low) * index / 256.0
+        for index in range(257)
+    ]
+    recovered_angles = [
+        angle
+        for angle in candidates
+        if recovered(simulate(payload, angle, 0.0)[0], simulation)
+    ]
+    if not recovered_angles:
         raise Refusal("NO_RECOVERY")
-    for _ in range(48):
-        middle = (low + high) / 2.0
-        middle_state, _ = simulate(payload, middle, 0.0)
-        if recovered(middle_state, simulation):
-            low = middle
-        else:
-            high = middle
     return {
         "controller_id": payload["controller_id"],
         "status": "evaluated",
         "final_angle_rad": state[0],
         "final_rate_rad_s": state[1],
         "peak_torque_nm": peak,
-        "recovery_angle_rad": low,
+        "recovery_angle_rad": max(recovered_angles),
         "recovered": recovered(state, simulation),
     }
 

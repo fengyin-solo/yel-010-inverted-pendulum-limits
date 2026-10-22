@@ -43,7 +43,7 @@
     "test_outputs.py::test_dt_upper_bound_is_accepted": {
       "priority": "core",
       "rationale": "dt upper bound is accepted；这是任务的主交付路径，失败意味着核心业务结果不可用。",
-      "weight": 0.6
+      "weight": 0.520
     },
     "test_outputs.py::test_dt_upper_bound_is_rejected": {
       "priority": "boundary",
@@ -89,6 +89,31 @@
       "priority": "supporting",
       "rationale": "success is quiet；这补充验证外围业务约束，失败会降低交付完整性和可运维性。",
       "weight": 0.016
+    },
+    "test_outputs.py::test_controller_identifier_length_endpoints_are_accepted[R2]": {
+      "priority": "boundary",
+      "rationale": "验证公开最小工位号长度 2 可正常核算。",
+      "weight": 0.008
+    },
+    "test_outputs.py::test_controller_identifier_length_endpoints_are_accepted[RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR]": {
+      "priority": "boundary",
+      "rationale": "验证公开最大工位号长度 48 可正常核算。",
+      "weight": 0.008
+    },
+    "test_outputs.py::test_nonmonotonic_recovery_islands_use_global_maximum": {
+      "priority": "core",
+      "rationale": "验证恢复集合断开时仍取整个区间的最大可恢复角，避免二分假设最低角一侧单调。",
+      "weight": 0.044
+    },
+    "test_outputs.py::test_recovery_bounds_must_not_be_equal": {
+      "priority": "boundary",
+      "rationale": "验证上下恢复角相等时按非法空区间拒收，避免台架参数错误被当成单点包络继续核算。",
+      "weight": 0.012
+    },
+    "test_outputs.py::test_dt_lower_bound_is_accepted": {
+      "priority": "boundary",
+      "rationale": "验证公开最小仿真步长仍能正常完成核算，避免把合法下限误判为坏输入。",
+      "weight": 0.008
     }
   },
   "weight_policy": {
