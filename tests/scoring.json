@@ -1,0 +1,99 @@
+{
+  "gate_tests": [
+    "test_outputs.py::test_requested_initial_state_is_settled",
+    "test_outputs.py::test_peak_torque_respects_actuator_limit",
+    "test_outputs.py::test_recovery_angle_uses_nonlinear_simulation",
+    "test_outputs.py::test_top_level_keys_are_exact",
+    "test_outputs.py::test_simulation_keys_are_exact",
+    "test_outputs.py::test_controller_identifier_length_is_strict[A]",
+    "test_outputs.py::test_controller_identifier_length_is_strict[AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA]"
+  ],
+  "schema_version": 1,
+  "tests": {
+    "test_outputs.py::test_absent_parent_is_io_failure": {
+      "priority": "recovery",
+      "rationale": "absent parent is io failure；这验证失败、重跑或恢复不变量，失败会造成旧数据和台账不一致。",
+      "weight": 0.038
+    },
+    "test_outputs.py::test_bad_input_preserves_existing_result": {
+      "priority": "recovery",
+      "rationale": "bad input preserves existing result；这验证失败、重跑或恢复不变量，失败会造成旧数据和台账不一致。",
+      "weight": 0.037
+    },
+    "test_outputs.py::test_boolean_mass_is_bad_input": {
+      "priority": "boundary",
+      "rationale": "boolean mass is bad input；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.028
+    },
+    "test_outputs.py::test_controller_identifier_edges_have_no_whitespace[ leading]": {
+      "priority": "supporting",
+      "rationale": "controller identifier edges have no whitespace；这补充验证外围业务约束，失败会降低交付完整性和可运维性。",
+      "weight": 0.016
+    },
+    "test_outputs.py::test_controller_identifier_edges_have_no_whitespace[trailing ]": {
+      "priority": "supporting",
+      "rationale": "controller identifier edges have no whitespace；这补充验证外围业务约束，失败会降低交付完整性和可运维性。",
+      "weight": 0.016
+    },
+    "test_outputs.py::test_controller_identifier_has_no_control_character": {
+      "priority": "supporting",
+      "rationale": "controller identifier has no control character；这补充验证外围业务约束，失败会降低交付完整性和可运维性。",
+      "weight": 0.016
+    },
+    "test_outputs.py::test_dt_upper_bound_is_accepted": {
+      "priority": "core",
+      "rationale": "dt upper bound is accepted；这是任务的主交付路径，失败意味着核心业务结果不可用。",
+      "weight": 0.6
+    },
+    "test_outputs.py::test_dt_upper_bound_is_rejected": {
+      "priority": "boundary",
+      "rationale": "dt upper bound is rejected；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.028
+    },
+    "test_outputs.py::test_duplicate_json_key_is_bad_input": {
+      "priority": "boundary",
+      "rationale": "duplicate json key is bad input；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.028
+    },
+    "test_outputs.py::test_gain_vector_needs_two_numbers": {
+      "priority": "supporting",
+      "rationale": "gain vector needs two numbers；这补充验证外围业务约束，失败会降低交付完整性和可运维性。",
+      "weight": 0.016
+    },
+    "test_outputs.py::test_no_recovery_at_low_end_is_refused": {
+      "priority": "recovery",
+      "rationale": "no recovery at low end is refused；这验证失败、重跑或恢复不变量，失败会造成旧数据和台账不一致。",
+      "weight": 0.037
+    },
+    "test_outputs.py::test_recovery_bounds_must_be_ordered": {
+      "priority": "recovery",
+      "rationale": "recovery bounds must be ordered；这验证失败、重跑或恢复不变量，失败会造成旧数据和台账不一致。",
+      "weight": 0.037
+    },
+    "test_outputs.py::test_repeat_run_is_byte_identical": {
+      "priority": "recovery",
+      "rationale": "repeat run is byte identical；这验证失败、重跑或恢复不变量，失败会造成旧数据和台账不一致。",
+      "weight": 0.037
+    },
+    "test_outputs.py::test_result_has_fixed_key_order": {
+      "priority": "schema",
+      "rationale": "result has fixed key order；这验证结构、类型或序列化外观，失败会使下游无法稳定消费结果。",
+      "weight": 0.022
+    },
+    "test_outputs.py::test_search_tolerance_upper_bound_is_rejected": {
+      "priority": "boundary",
+      "rationale": "search tolerance upper bound is rejected；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.028
+    },
+    "test_outputs.py::test_success_is_quiet": {
+      "priority": "supporting",
+      "rationale": "success is quiet；这补充验证外围业务约束，失败会降低交付完整性和可运维性。",
+      "weight": 0.016
+    }
+  },
+  "weight_policy": {
+    "basis": "business_priority",
+    "core_min_share": 0.5,
+    "version": 1
+  }
+}
